@@ -69,10 +69,5 @@ Este repositorio contiene el desarrollo técnico del sistema basado en microserv
 
 ---
 
-**Recuerda** que este README debe mantenerse actualizado y con un lenguaje claro y profesional.  
-¡Buena suerte en su presentación! 🎓
-```
-
----
 
 
