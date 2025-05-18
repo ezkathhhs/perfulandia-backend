@@ -1,8 +1,3 @@
-Claro, aquí tienes un **README.md profesional base** para tus estudiantes, con las secciones necesarias para documentar un proyecto de microservicios como el de *Perfulandia SPA*. Cada sección tiene indicaciones claras sobre lo que deben completar:
-
----
-
-```markdown
 # 🧾 Proyecto: Transformación Digital - Perfulandia SPA
 
 Este repositorio contiene el desarrollo técnico del sistema basado en microservicios para la empresa Perfulandia SPA, como parte de la Evaluación Parcial 2 de la asignatura **Desarrollo Full Stack I**.
