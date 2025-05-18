@@ -1,5 +1,6 @@
 # 🧾 Proyecto: Transformación Digital - Perfulandia SPA
 
+
 Este repositorio contiene el desarrollo técnico del sistema basado en microservicios para la empresa Perfulandia SPA, como parte de la Evaluación Parcial 2 de la asignatura **Desarrollo Full Stack I**.
 
 ## 📦 Descripción General del Proyecto
@@ -69,5 +70,5 @@ Este repositorio contiene el desarrollo técnico del sistema basado en microserv
 
 ---
 
-
+[Guía Oficial en Notion – Evaluación Parcial 2 (35%)](https://quilt-canary-969.notion.site/Gu-a-Oficial-Evaluaci-n-Parcial-2-35-1f75b3c4e31280aaab79c9a71f1cfb7b?pvs=4)
 
