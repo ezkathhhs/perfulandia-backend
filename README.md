@@ -9,7 +9,7 @@ Este repositorio contiene el desarrollo técnico del sistema basado en microserv
 
 ## 🧩 Arquitectura de Microservicios
 
-> 📝 Describir cómo está estructurado el sistema en microservicios. Pueden incluir un diagrama (opcional) y explicar brevemente la función de cada servicio.
+> 📝 Describir cómo está estructurado el sistema en microservicios. Pueden incluir un diagrama y explicar brevemente la función de cada servicio.
 
 ### Microservicios Desarrollados
 
@@ -29,7 +29,7 @@ Este repositorio contiene el desarrollo técnico del sistema basado en microserv
 ## 📮 Endpoints y Pruebas
 
 > 📝 Especificar los principales endpoints disponibles por microservicio (CRUD y llamadas entre servicios).  
-> Incluir capturas o descripciones de pruebas realizadas con Postman (mínimo 3 por servicio).
+> Incluir capturas o descripciones de pruebas realizadas con Postman (mínimo 3 por micro-servicio).
 
 ## 🧑‍💻 Integrantes del Equipo
 
@@ -39,7 +39,7 @@ Este repositorio contiene el desarrollo técnico del sistema basado en microserv
 |-------------------------|----------------------------|------------------------------|
 | Nombre del integrante 1 | (Ej: Backend - Usuarios)   | usuarioservice               |
 | Nombre del integrante 2 | (Ej: Backend - Productos)  | productoservice              |
-| Nombre del integrante 3 | (Ej: CI/CD - Repositorio) | pedidoservice                |
+| Nombre del integrante 3 | (Ej:Repositorio)           | pedidoservice                |
 
 ## 📂 Estructura del Repositorio
 
@@ -50,15 +50,15 @@ Este repositorio contiene el desarrollo técnico del sistema basado en microserv
 📦 perfulandia-microservices
 ├── usuarioservice
 ├── productoservice
-├── pedidoservice
-├── notificacionservice
+├── pedidoservice (Ejemplo)
+├── notificacionservice (Ejemplo)
 └── README.md
 
 ```
 
 ## 👥 Colaboración en GitHub
 
-> 📝 Explicar cómo se organizó el trabajo en ramas (`main`, `develop`, `usuario-service`, etc.), frecuencia de commits y cómo se coordinaron como equipo.
+> 📝 Explicar cómo se organizó el trabajo en ramas (`master`, `pruebas`), frecuencia de commits y cómo se coordinaron como equipo.
 
 ## 📈 Lecciones Aprendidas
 
