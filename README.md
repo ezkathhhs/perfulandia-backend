@@ -31,10 +31,6 @@ Este repositorio contiene el desarrollo técnico del sistema basado en microserv
 > 📝 Especificar los principales endpoints disponibles por microservicio (CRUD y llamadas entre servicios).  
 > Incluir capturas o descripciones de pruebas realizadas con Postman (mínimo 3 por servicio).
 
-## 🔁 CI/CD (Integración y Entrega Continua)
-
-> 📝 Explicar qué herramienta usaron (GitHub Actions, Vercel, etc.) y qué flujo automatizado implementaron (por ejemplo: `push` → `test` → `deploy`).
-
 ## 🧑‍💻 Integrantes del Equipo
 
 > 📝 Indicar nombre completo y rol de cada integrante del equipo.
