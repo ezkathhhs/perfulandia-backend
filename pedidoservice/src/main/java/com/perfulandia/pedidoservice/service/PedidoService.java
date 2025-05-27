@@ -20,7 +20,7 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final RestTemplate restTemplate;
 
-    @Value("${http://localhost:8084/api/productos}")
+    @Value("${productoservice.url}")
     private String productoServiceUrl;
 
     // DTO para la respuesta de producto-service
@@ -56,10 +56,6 @@ public class PedidoService {
             if (productoActual == null) {
                 throw new RuntimeException("Producto con ID " + itemInfo.productoId() + " devolvió null desde producto-service.");
             }
-            // Opcional: Validar stock aquí si es un requisito estricto antes de crear el pedido
-            // if (productoActual.stock() < itemInfo.cantidad()) {
-            //    throw new RuntimeException("Stock insuficiente para producto: " + productoActual.nombre());
-            // }
 
             PedidoItem pi = new PedidoItem();
             pi.setProductoId(itemInfo.productoId());
