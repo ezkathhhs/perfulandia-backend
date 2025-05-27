@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "usuarioservice.url",
+      "type": "java.lang.String",
+      "description": "Description for usuarioservice.url."
+  }
+] }

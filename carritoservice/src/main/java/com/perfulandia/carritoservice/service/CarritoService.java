@@ -3,12 +3,9 @@ package com.perfulandia.carritoservice.service;
 import com.perfulandia.carritoservice.model.Carrito;
 import com.perfulandia.carritoservice.model.CarritoItem;
 import com.perfulandia.carritoservice.repository.CarritoRepository;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,57 +13,60 @@ public class CarritoService {
 
     private final CarritoRepository carritoRepository;
 
-    // Constructor para la inyección de dependencias de CarritoRepository
     public CarritoService(CarritoRepository carritoRepository) {
         this.carritoRepository = carritoRepository;
     }
 
-    public List<Carrito> listarTodosLosCarritos() {
-        return carritoRepository.findAll();
-    }
-
-    @Transactional(readOnly = true) // Buena práctica para operaciones de solo lectura
-    public Optional<Carrito> obtenerCarritoPorUsuarioId(Long usuarioId) {
-        return carritoRepository.findByUsuarioId(usuarioId);
+    @Transactional
+    public Carrito obtenerOCrearCarrito(Long usuarioId) {
+        return carritoRepository.findByUsuarioId(usuarioId).orElseGet(() -> {
+            Carrito nuevoCarrito = new Carrito();
+            nuevoCarrito.setUsuarioId(usuarioId);
+            return carritoRepository.save(nuevoCarrito);
+        });
     }
 
     @Transactional
-    public Carrito obtenerOCrearCarritoPorUsuarioId(Long usuarioId) {
-        return carritoRepository.findByUsuarioId(usuarioId)
-                .orElseGet(() -> {
-                    Carrito nuevoCarrito = new Carrito();
-                    nuevoCarrito.setUsuarioId(usuarioId);
-                    return carritoRepository.save(nuevoCarrito);
-                });
-    }
-
-    @Transactional
-    public Carrito agregarItemAlCarrito(Long usuarioId, Long productoId, String nombreProducto, int cantidad, BigDecimal precioUnitario) {
-        Carrito carrito = obtenerOCrearCarritoPorUsuarioId(usuarioId);
-
-        Optional<CarritoItem> itemExistente = carrito.getItems().stream()
-                .filter(item -> item.getProductoId().equals(productoId))
+    public Carrito agregarItem(Long usuarioId, Long productoId, String nombreProducto, int cantidad, BigDecimal precioUnitario) {
+        Carrito carrito = obtenerOCrearCarrito(usuarioId);
+        Optional<CarritoItem> itemOpt = carrito.getItems().stream()
+                .filter(i -> i.getProductoId().equals(productoId))
                 .findFirst();
 
-        if (itemExistente.isPresent()) {
-            // El producto ya está en el carrito, actualizamos la cantidad
-            CarritoItem item = itemExistente.get();
+        if (itemOpt.isPresent()) {
+            CarritoItem item = itemOpt.get();
             item.setCantidad(item.getCantidad() + cantidad);
+            item.setPrecioUnitario(precioUnitario); // Actualizar precio si cambia
+            item.setNombreProducto(nombreProducto);
         } else {
-            // El producto no está en el carrito, creamos un nuevo CarritoItem
-            CarritoItem nuevoItem = new CarritoItem();
-            nuevoItem.setProductoId(productoId);
-            nuevoItem.setNombreProducto(nombreProducto);
-            nuevoItem.setCantidad(cantidad);
-            nuevoItem.setPrecioUnitario(precioUnitario);
-            nuevoItem.setCarrito(carrito);
+            CarritoItem nuevoItem = new CarritoItem(null, productoId, nombreProducto, cantidad, precioUnitario, carrito);
             carrito.addItem(nuevoItem);
         }
-        return carritoRepository.save(carrito); // Guardamos el carrito con el nuevo item o la cantidad actualizada
+        return carritoRepository.save(carrito);
     }
 
     @Transactional
-    public Optional<Carrito> eliminarItemDelCarrito(Long usuarioId, Long productoId) {
+    public Optional<Carrito> actualizarCantidadItem(Long usuarioId, Long productoId, int nuevaCantidad) {
+        Optional<Carrito> carritoOpt = carritoRepository.findByUsuarioId(usuarioId);
+        if (carritoOpt.isPresent()) {
+            Carrito carrito = carritoOpt.get();
+            Optional<CarritoItem> itemOpt = carrito.getItems().stream()
+                    .filter(i -> i.getProductoId().equals(productoId))
+                    .findFirst();
+            if (itemOpt.isPresent()) {
+                if (nuevaCantidad > 0) {
+                    itemOpt.get().setCantidad(nuevaCantidad);
+                } else {
+                    carrito.getItems().remove(itemOpt.get());
+                }
+                return Optional.of(carritoRepository.save(carrito));
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Transactional
+    public Optional<Carrito> removerItem(Long usuarioId, Long productoId) {
         Optional<Carrito> carritoOpt = carritoRepository.findByUsuarioId(usuarioId);
         if (carritoOpt.isPresent()) {
             Carrito carrito = carritoOpt.get();
@@ -74,9 +74,9 @@ public class CarritoService {
             if (removed) {
                 return Optional.of(carritoRepository.save(carrito));
             }
-            return Optional.of(carrito); // No se eliminó nada, pero el carrito existe
+            return Optional.of(carrito);
         }
-        return Optional.empty(); // Carrito no encontrado para el usuario
+        return Optional.empty();
     }
 
     @Transactional
@@ -84,18 +84,17 @@ public class CarritoService {
         Optional<Carrito> carritoOpt = carritoRepository.findByUsuarioId(usuarioId);
         if (carritoOpt.isPresent()) {
             Carrito carrito = carritoOpt.get();
-            carrito.getItems().clear(); // Elimina todos los items
+            carrito.getItems().clear();
             return Optional.of(carritoRepository.save(carrito));
         }
-        return Optional.empty(); // Carrito no encontrado para el usuario
+        return Optional.empty();
     }
 
-    @Transactional
-    public void eliminarCarritoPorId(Long idCarrito) {
-        carritoRepository.deleteById(idCarrito);
+    public Optional<Carrito> obtenerCarritoPorId(Long carritoId) {
+        return carritoRepository.findById(carritoId);
     }
 
-    public Carrito buscarCarritoPorId(Long idCarrito) {
-        return carritoRepository.findById(idCarrito).orElse(null);
+    public void eliminarCarritoPorId(Long carritoId) {
+        carritoRepository.deleteById(carritoId);
     }
 }

@@ -1,24 +1,15 @@
 package com.perfulandia.carritoservice.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import java.math.BigDecimal;
-import java.time.LocalDateTime; // Para registrar cuándo fue la última actualización
-import java.util.ArrayList;
-import java.util.List;
-
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -31,17 +22,13 @@ public class Carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(unique = true, nullable = false)
     private Long usuarioId;
-
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CarritoItem> items = new ArrayList<>();
-
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime fechaCreacion;
-
     @UpdateTimestamp
     private LocalDateTime fechaActualizacion;
 
@@ -49,11 +36,6 @@ public class Carrito {
     public void addItem(CarritoItem item) {
         this.items.add(item);
         item.setCarrito(this);
-    }
-
-    public void removeItem(CarritoItem item) {
-        this.items.remove(item);
-        item.setCarrito(null); // Rompe la relación
     }
 
     public void removeItemByProductoId(Long productoId) {

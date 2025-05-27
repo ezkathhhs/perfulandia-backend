@@ -1,19 +1,11 @@
 package com.perfulandia.carritoservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import java.math.BigDecimal; // Para manejar precios con precisión
-
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import java.math.BigDecimal; // Para manejar precios con precisión
+import lombok.Builder;
 
 @Entity
 @Table(name = "carrito_items") // Nombre de la tabla en la base de datos
@@ -36,7 +28,7 @@ public class CarritoItem {
     @JoinColumn(name = "carrito_id", nullable = false)
     private Carrito carrito;
 
-    // Método para calcular el subtotal de este item
+    // Metodo para calcular el subtotal de este item
     public BigDecimal getSubtotal() {
         if (precioUnitario == null || cantidad == null) {
             return BigDecimal.ZERO;
