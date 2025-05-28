@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "pedido_items")
+@Entity // Esto significa que representa una tabla en la base de datos
+@Table(name = "pedido_items") // Nombre de la tabla en la base de datos
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
